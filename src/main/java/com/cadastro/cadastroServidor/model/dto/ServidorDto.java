@@ -38,9 +38,5 @@ public class ServidorDto {
     public void setIdLotacao(Long idLotacao) {
         this.idLotacao = idLotacao;
     }
-
-    public Long getLotacao() {
-        return 0L;
-    }
 }
 

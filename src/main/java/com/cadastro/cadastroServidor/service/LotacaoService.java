@@ -55,8 +55,10 @@ public class LotacaoService {
 
     public LotacaoDto findById(Long id) {
             Lotacao lotacao = lotacaoRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException( "Lotacao" + id + "não encontrada."));
-            return new LotacaoDto(lotacao.getId(), lotacao.getDescricao());
+                    .orElseThrow(() -> new RuntimeException( "Lotacao " + id + " não encontrada."));
+
+            return new LotacaoDto(lotacao.getId(),
+                        lotacao.getDescricao());
         }
 
 //        Optional<Lotacao> lotacao = lotacaoRepository.findById(id);
@@ -70,19 +72,26 @@ public class LotacaoService {
 //        throw new RuntimeException("A lotação não existe");
 
 
-    public LotacaoDto update(LotacaoDto lotacaoDto){
-        //Verificar se ela existe com o FindById
-        LotacaoDto lotacaoDto1 = findById(lotacaoDto.getId());
-        Lotacao lotacao = new Lotacao();
-        lotacao.setId(lotacaoDto.getId());
-            if (lotacaoDto.getDescricao() != null){
-                lotacao.setId(lotacaoDto.getId());
-                throw new RuntimeException("Erro ao atualizar Lotacao");
-            }
+    public LotacaoDto update(LotacaoDto lotacaoDto) {
+        // Verificar se a lotação existe pelo ID
+        LotacaoDto lotacaoExistente = findById(lotacaoDto.getId());
 
+        // Verificar se já existe outra lotação
+        boolean descricaoEmUso = lotacaoRepository.existsByDescricao(lotacaoDto.getDescricao());
+        if (descricaoEmUso && !lotacaoExistente.getDescricao().equals(lotacaoDto.getDescricao())) {
+            throw new RuntimeException("Já existe uma lotação com a descrição informada.");
+        }
+
+        // Atualizar os dados da lotação
+        Lotacao lotacao = new Lotacao();
+        lotacao.setId(lotacaoExistente.getId());
+        lotacao.setDescricao(lotacaoDto.getDescricao());
+
+        // Salvar a lotação
         Lotacao lotacaoAtualizada = lotacaoRepository.save(lotacao);
-        return new LotacaoDto(
-                lotacaoAtualizada.getDescricao());
+
+        // Retornar o objeto atualizado
+        return new LotacaoDto(lotacaoAtualizada.getId(), lotacaoAtualizada.getDescricao());
     }
 
     public void delete(Long id){

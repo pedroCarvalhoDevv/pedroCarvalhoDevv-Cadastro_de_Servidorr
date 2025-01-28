@@ -29,15 +29,15 @@ public class ServidorService {
 
     public ServidorDto create(ServidorDto servidorDto){
         // objeto lotação -> colocar em uma variavel
-        LotacaoDto lotacaoServidor = lotacaoService.findById(servidorDto.getLotacao());
+        LotacaoDto lotacaoServidor = lotacaoService.findById(servidorDto.getIdLotacao());
         Servidor servidor = new Servidor();
         servidor.setData(new Date());
         servidor.setNome(servidorDto.getNome());
         servidor.setMatricula(servidorDto.getMatricula());
         // lotacao do findById
-        servidor.setLotacao(new Lotacao(servidorDto.getLotacao()));
+        servidor.setLotacao(new Lotacao(servidorDto.getIdLotacao()));
         Servidor servidor1 = servidorRepository.save(servidor);
-        return new ServidorDto(servidor1.getMatricula(), servidorDto.getNome(),servidorDto.getLotacao());
+        return new ServidorDto(servidor1.getMatricula(), servidorDto.getNome(),servidorDto.getIdLotacao());
 
     }
 
@@ -81,10 +81,10 @@ public class ServidorService {
                 servidor.setNome(servidorDto.getNome());
             }
 
-            if (servidorDto.getLotacao() != null ){
-            LotacaoDto servidorLotacao = lotacaoService.findById(servidorDto.getLotacao());
-                if (servidorLotacao != null && servidorLotacao.getId() != servidorDto1.getLotacao()){
-                servidor.setLotacao(new Lotacao(servidorDto1.getLotacao()));
+            if (servidorDto.getIdLotacao() != null ){
+            LotacaoDto servidorLotacao = lotacaoService.findById(servidorDto.getIdLotacao());
+                if (servidorLotacao != null && servidorLotacao.getId() != servidorDto1.getIdLotacao()){
+                servidor.setLotacao(new Lotacao(servidorDto1.getIdLotacao()));
             } else {
                     throw new RuntimeException("Não foi possivel atualizar servidor.");
                 }
