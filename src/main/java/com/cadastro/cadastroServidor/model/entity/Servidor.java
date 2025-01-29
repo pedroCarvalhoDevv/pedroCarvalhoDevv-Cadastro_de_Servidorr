@@ -14,7 +14,6 @@ private static final int MATRICULA_MAX_LENGHT = 200;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,unique = true)
     private Long matricula;
     @Column(nullable = false)
     private String nome;

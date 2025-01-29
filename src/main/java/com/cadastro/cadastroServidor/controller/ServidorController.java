@@ -22,17 +22,17 @@ public class ServidorController {
         return servidorService.create(servidorDto);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     List<ServidorDto> findAll(){
         return servidorService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ServidorDto findById(@PathVariable Long id) {
         return servidorService.findById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ServidorDto update (@RequestBody ServidorDto servidorDto){
         return servidorService.update(servidorDto);
     }

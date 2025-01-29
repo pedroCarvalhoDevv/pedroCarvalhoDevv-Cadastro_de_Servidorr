@@ -61,15 +61,7 @@ public class LotacaoService {
                         lotacao.getDescricao());
         }
 
-//        Optional<Lotacao> lotacao = lotacaoRepository.findById(id);
 //
-//        if (lotacao.isPresent()) {
-//            return new LotacaoDto(
-//                    lotacao.get().getId(),
-//                    lotacao.get().getDescricao());
-//        }
-
-//        throw new RuntimeException("A lotação não existe");
 
 
     public LotacaoDto update(LotacaoDto lotacaoDto) {
